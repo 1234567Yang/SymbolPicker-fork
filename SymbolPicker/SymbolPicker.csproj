@@ -7,6 +7,17 @@
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
     <ApplicationIcon>icons8_alpha.ico</ApplicationIcon>
+	
+	
+	<Company>Yang</Company>
+    <Product>Symbol Picker</Product>
+	<Copyright>Copyright © 2025 Yang and Thisismalindu published under MIT license</Copyright>
+    <Title>Symbol Picker</Title>
+    <Description>Pick different symbols and insert them wherever you are typing</Description>
+	<AssemblyVersion>1.2.0.0</AssemblyVersion>
+	<FileVersion>1.2.0.0</FileVersion>
+	<InformationalVersion>1.2.0</InformationalVersion>
+
   </PropertyGroup>
 
   <ItemGroup>

@@ -8,7 +8,7 @@
     "net6.0-windows7.0": []
   },
   "packageFolders": {
-    "C:\\Users\\yang2\\.nuget\\packages\\": {},
+    "C:\\Users\\Yang2\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
@@ -17,14 +17,14 @@
       "projectUniqueName": "C:\\C#sourceCode\\SymbolPicker-fork\\SymbolPicker\\SymbolPicker.csproj",
       "projectName": "SymbolPicker",
       "projectPath": "C:\\C#sourceCode\\SymbolPicker-fork\\SymbolPicker\\SymbolPicker.csproj",
-      "packagesPath": "C:\\Users\\yang2\\.nuget\\packages\\",
+      "packagesPath": "C:\\Users\\Yang2\\.nuget\\packages\\",
       "outputPath": "C:\\C#sourceCode\\SymbolPicker-fork\\SymbolPicker\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\yang2\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Yang2\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -52,7 +52,7 @@
         "auditLevel": "low",
         "auditMode": "direct"
       },
-      "SdkAnalysisLevel": "9.0.100"
+      "SdkAnalysisLevel": "9.0.300"
     },
     "frameworks": {
       "net6.0-windows7.0": {
@@ -76,7 +76,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.102\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.304\\RuntimeIdentifierGraph.json"
       }
     }
   }

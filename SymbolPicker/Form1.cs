@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using Simulator;
@@ -18,8 +18,16 @@ namespace SymbolPicker
 
         private static string allPath = Application.StartupPath + @"\symbols.txt";
         private static string recentPath = Application.StartupPath + @"\recent.txt";
-        private static Font templateFont = new Font("Segoe UI Variable Display", 14F, FontStyle.Regular, GraphicsUnit.Point);
-        private static Size templateSize = new System.Drawing.Size(30, 30);
+
+        // åŸºå‡†å€¼ï¼ˆ96 DPIä¸‹çš„è®¾è®¡å€¼ï¼‰
+        private static readonly Size BaseButtonSize = new Size(30, 30);
+        private static readonly float BaseFontSize = 9.5F;
+        private static readonly int BaseButtonPadding = 1;
+
+        // å®é™…ä½¿ç”¨çš„å€¼
+        private static Font templateFont = null;
+        private static Size templateSize;
+        private static Padding templatePadding;
 
 
         private static Keys showHideHotKey;
@@ -38,7 +46,7 @@ namespace SymbolPicker
             //Console.WriteLine("Oh wait, Im idiot im on release mode");
 
 
-            //Trace.WriteLine(KeyboardSimulator.SimulateKeyboard(0, KeyEventFlags.UNICODE, 'ÎÒ', true, 0));
+            //Trace.WriteLine(KeyboardSimulator.SimulateKeyboard(0, KeyEventFlags.UNICODE, 'ÃÃ’', true, 0));
             //Trace.WriteLine(KeyboardSimulator.SimulateKeyboard(0, KeyEventFlags.KEYUP));
         }
 
@@ -53,6 +61,39 @@ namespace SymbolPicker
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+            this.AutoScaleMode = AutoScaleMode.Dpi;
+
+            using (Graphics g = this.CreateGraphics())
+            {
+                // è·å–å½“å‰DPIå’Œç¼©æ”¾æ¯”ä¾‹
+                float currentDpi = g.DpiX;
+                float scaleFactor = currentDpi / 96F;
+
+                // è®¡ç®—ç¼©æ”¾åçš„å°ºå¯¸
+                templateSize = new Size(
+                    (int)(BaseButtonSize.Width * scaleFactor),
+                    (int)(BaseButtonSize.Height * scaleFactor)
+                );
+
+                // è®¡ç®—ç¼©æ”¾åçš„å­—ä½“å¤§å°
+                float scaledFontSize = BaseFontSize * scaleFactor;
+                templateFont = new Font("Segoe UI Variable Display",
+                                       scaledFontSize,
+                                       FontStyle.Regular,
+                                       GraphicsUnit.Point);
+
+                int scaledPadding = (int)(BaseButtonPadding * scaleFactor);
+                Console.WriteLine(scaledPadding);
+                templatePadding = new Padding(
+                    0,                  // å·¦è¾¹è·
+                    scaledPadding,      // ä¸Šè¾¹è·
+                    0,                  // å³è¾¹è·
+                    0                   // ä¸‹è¾¹è·
+                );
+            }
+
+
             TestInit();
 
 
@@ -105,6 +146,7 @@ namespace SymbolPicker
             button.Size = templateSize;
             button.Click += Button_Click;
             button.Tag = tag;
+            button.Padding = templatePadding;
 
             button.Text = txt;
 
@@ -112,7 +154,7 @@ namespace SymbolPicker
         }
         private void LoadButtons(string path, List<Symbol> lssym, List<Button> lsbtn, FlowLayoutPanel layout, string tag)
         {
-            if (!File.Exists(path)) return; //¿ÉÄÜÊÇ ¡¾×î½üÊ¹ÓÃ¡¿ »¹Ã»Ìí¼Ó
+            if (!File.Exists(path)) return; //Â¿Ã‰Ã„ÃœÃŠÃ‡ Â¡Â¾Ã—Ã®Â½Ã¼ÃŠÂ¹Ã“ÃƒÂ¡Â¿ Â»Â¹ÃƒÂ»ÃŒÃ­Â¼Ã“
             try
             {
                 string[] linesFromTextFile = File.ReadAllLines(path);
@@ -144,7 +186,7 @@ namespace SymbolPicker
             layout.Controls.Clear();
             for (int i = 0; i < lsbtn.Count; i++)
             {
-                //ButtonÃ»·¨Clone
+                //ButtonÃƒÂ»Â·Â¨Clone
                 layout.Controls.Add(lsbtn[i]);
             }
         }
@@ -284,7 +326,7 @@ namespace SymbolPicker
         {
             this.textBox_opt.Text = sender.Text;
             //Clipboard.SetText(sender.Text);
-            //this.Hide(); // Òş²Ø´°¿Ú Ê§È¥½¹µã
+            //this.Hide(); // Ã’Ã¾Â²Ã˜Â´Â°Â¿Ãš ÃŠÂ§ÃˆÂ¥Â½Â¹ÂµÃ£
             Thread.Sleep(10);
 
             //uint resultDown = KeyboardSimulator.SimulateKeyboard(0x41, KeyEventFlags.KEYDOWN);
@@ -294,19 +336,19 @@ namespace SymbolPicker
 
             SimulateUnicodeInput(sender.Text);
 
-            // this.Show(); // ÖØĞÂÏÔÊ¾´°¿Ú
+            // this.Show(); // Ã–Ã˜ÃÃ‚ÃÃ”ÃŠÂ¾Â´Â°Â¿Ãš
         }
 
         public static void SimulateUnicodeInput(string text)
         {
             foreach (var c in text)
             {
-                ushort unicode = (ushort)c; // Ö±½Ó×ª»»Îª Unicode£¨½öÊÊÓÃÓÚ U+0000 ~ U+FFFF£©
+                ushort unicode = (ushort)c; // Ã–Â±Â½Ã“Ã—ÂªÂ»Â»ÃÂª UnicodeÂ£Â¨Â½Ã¶ÃŠÃŠÃ“ÃƒÃ“Ãš U+0000 ~ U+FFFFÂ£Â©
 
-                // ·¢ËÍ°´¼ü°´ÏÂÊÂ¼ş
+                // Â·Â¢Ã‹ÃÂ°Â´Â¼Ã¼Â°Â´ÃÃ‚ÃŠÃ‚Â¼Ã¾
                 KeyboardSimulator.SimulateKeyboard(0, KeyEventFlags.UNICODE, unicode, true);
 
-                // ·¢ËÍ°´¼üÊÍ·ÅÊÂ¼ş
+                // Â·Â¢Ã‹ÃÂ°Â´Â¼Ã¼ÃŠÃÂ·Ã…ÃŠÃ‚Â¼Ã¾
                 KeyboardSimulator.SimulateKeyboard(0, KeyEventFlags.UNICODE | KeyEventFlags.KEYUP, unicode, true);
             }
         }
@@ -318,13 +360,13 @@ namespace SymbolPicker
 
         public void FilterButtons(string text)
         {
-            //this.label_loading.Visible = true; ²»ĞèÒªÁË£¬ÒÑ¾­ºÜ¿ìÁË
+            //this.label_loading.Visible = true; Â²Â»ÃÃ¨Ã’ÂªÃÃ‹Â£Â¬Ã’Ã‘Â¾Â­ÂºÃœÂ¿Ã¬ÃÃ‹
             this.Refresh();
-            flowLayoutPanel_all.SuspendLayout();  // ÔİÍ£ UI ¸üĞÂ£¬Ìá¸ßĞÔÄÜ
-            // flowLayoutPanel.Controls.Clear(); // Çå³ı¾ÉµÄ°´Å¥
+            flowLayoutPanel_all.SuspendLayout();  // Ã”ÃÃÂ£ UI Â¸Ã¼ÃÃ‚Â£Â¬ÃŒÃ¡Â¸ÃŸÃÃ”Ã„Ãœ
+            // flowLayoutPanel.Controls.Clear(); // Ã‡Ã¥Â³Ã½Â¾Ã‰ÂµÃ„Â°Â´Ã…Â¥
 
 
-            if (string.IsNullOrEmpty(text)) //¸ü¿ì
+            if (string.IsNullOrEmpty(text)) //Â¸Ã¼Â¿Ã¬
             {
                 for (int i = 0; i < allSymbols.Count; i++)
                 {
@@ -353,7 +395,7 @@ namespace SymbolPicker
 
 
 
-            flowLayoutPanel_all.ResumeLayout();  // »Ö¸´ UI ¸üĞÂ
+            flowLayoutPanel_all.ResumeLayout();  // Â»Ã–Â¸Â´ UI Â¸Ã¼ÃÃ‚
             //this.label_loading.Visible = false;
             this.Refresh();
         }
@@ -365,7 +407,7 @@ namespace SymbolPicker
 
         private async void textBox_search_TextChanged(object sender, EventArgs e)
         {
-            // È¡ÏûÖ®Ç°µÄÈÎÎñ
+            // ÃˆÂ¡ÃÃ»Ã–Â®Ã‡Â°ÂµÃ„ÃˆÃÃÃ±
             CancellationTokenSource?.Cancel();
             CancellationTokenSource = new CancellationTokenSource();
             CancellationToken token = CancellationTokenSource.Token;
@@ -375,12 +417,12 @@ namespace SymbolPicker
                 await Task.Delay(150, token);
                 if (!token.IsCancellationRequested)
                 {
-                    FilterButtons(textBox_search.Text); // Ö´ĞĞËÑË÷
+                    FilterButtons(textBox_search.Text); // Ã–Â´ÃÃÃ‹Ã‘Ã‹Ã·
                 }
             }
             catch (TaskCanceledException)
             {
-                // ÈÎÎñ±»È¡Ïû£¬²»×öÈÎºÎ´¦Àí
+                // ÃˆÃÃÃ±Â±Â»ÃˆÂ¡ÃÃ»Â£Â¬Â²Â»Ã—Ã¶ÃˆÃÂºÃÂ´Â¦Ã€Ã­
             }
         }
 
@@ -418,7 +460,7 @@ namespace SymbolPicker
         //    get
         //    {
         //        CreateParams cp = base.CreateParams;
-        //        cp.ExStyle |= WS_EX_NOACTIVATE; // Ä¬ÈÏ²»»ñÈ¡½¹µã
+        //        cp.ExStyle |= WS_EX_NOACTIVATE; // Ã„Â¬ÃˆÃÂ²Â»Â»Ã±ÃˆÂ¡Â½Â¹ÂµÃ£
         //        return cp;
         //    }
         //}
@@ -471,7 +513,7 @@ namespace SymbolPicker
             [DllImport("user32")]
             private static extern bool RegisterHotKey(IntPtr hWnd, int id, uint control, Keys vk);
 
-            //½â³ı×¢²áÈÈ¼üµÄapi
+            //Â½Ã¢Â³Ã½Ã—Â¢Â²Ã¡ÃˆÃˆÂ¼Ã¼ÂµÃ„api
             [DllImport("user32")]
             private static extern bool UnregisterHotKey(IntPtr hWnd, int id);
 
@@ -494,7 +536,7 @@ namespace SymbolPicker
         }
 
 
-        protected override void WndProc(ref Message m) //ÖØĞ´´°¿ÚÏûÏ¢
+        protected override void WndProc(ref Message m) //Ã–Ã˜ÃÂ´Â´Â°Â¿ÃšÃÃ»ÃÂ¢
         {
             switch (m.Msg)
             {
@@ -503,7 +545,7 @@ namespace SymbolPicker
                     {
                         case SHOWHIDEHOTKEYCODE:
 
-                            label1.Focus(); //×ÜÊÇlabel1¾ÍºÃÁË
+                            label1.Focus(); //Ã—ÃœÃŠÃ‡label1Â¾ÃÂºÃƒÃÃ‹
                             if (this.Visible == false) //WindowState == FormWindowState.Minimized
                             {
                                 // label1.Focus();
@@ -513,7 +555,7 @@ namespace SymbolPicker
                             }
                             else
                             {
-                                // label1.Focus(); //È¡ÏûsearchµÄFocus£¨ÈÃ´°¿ÚÊ§È¥½¹µã£¬ÒòÎªFocusÄÇÀïÓÃÁË¸öÊÂ¼ş£¬Èç¹ûÃ»ÓĞÁË½¹µã¾ÍÉèÖÃ±¾´°¿ÚÎŞ½¹µã£©
+                                // label1.Focus(); //ÃˆÂ¡ÃÃ»searchÂµÃ„FocusÂ£Â¨ÃˆÃƒÂ´Â°Â¿ÃšÃŠÂ§ÃˆÂ¥Â½Â¹ÂµÃ£Â£Â¬Ã’Ã²ÃÂªFocusÃ„Ã‡Ã€Ã¯Ã“ÃƒÃÃ‹Â¸Ã¶ÃŠÃ‚Â¼Ã¾Â£Â¬ÃˆÃ§Â¹Ã»ÃƒÂ»Ã“ÃÃÃ‹Â½Â¹ÂµÃ£Â¾ÃÃ‰Ã¨Ã–ÃƒÂ±Â¾Â´Â°Â¿ÃšÃÃÂ½Â¹ÂµÃ£Â£Â©
                                 //this.Visible = false; //WindowState = FormWindowState.Minimized
                                 FadeWindow(true);
                             }
@@ -522,7 +564,7 @@ namespace SymbolPicker
 
                     break;
                 case Program.MUTEXMESSAGE:
-                    if(this.Visible == false)
+                    if (this.Visible == false)
                     {
                         FadeWindow(false);
                     }

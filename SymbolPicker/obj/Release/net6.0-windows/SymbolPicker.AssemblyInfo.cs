@@ -11,13 +11,15 @@
 using System;
 using System.Reflection;
 
-[assembly: System.Reflection.AssemblyCompanyAttribute("SymbolPicker")]
+[assembly: System.Reflection.AssemblyCompanyAttribute("Yang")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
-[assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+85168dbf36a24f9ec085d6247bd18a0b4f6e6bce")]
-[assembly: System.Reflection.AssemblyProductAttribute("SymbolPicker")]
+[assembly: System.Reflection.AssemblyCopyrightAttribute("Copyright © 2025 Yang and Thisismalindu published under MIT license")]
+[assembly: System.Reflection.AssemblyDescriptionAttribute("Pick different symbols and insert them wherever you are typing")]
+[assembly: System.Reflection.AssemblyFileVersionAttribute("1.2.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.2.0+4c4e98eaab460dac30ccdf63937664df2d42297c")]
+[assembly: System.Reflection.AssemblyProductAttribute("Symbol Picker")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SymbolPicker")]
-[assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
+[assembly: System.Reflection.AssemblyVersionAttribute("1.2.0.0")]
 [assembly: System.Runtime.Versioning.TargetPlatformAttribute("Windows7.0")]
 [assembly: System.Runtime.Versioning.SupportedOSPlatformAttribute("Windows7.0")]
 

@@ -50,7 +50,7 @@
             textBox_search.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
             textBox_search.Location = new Point(4, 8);
             textBox_search.Name = "textBox_search";
-            textBox_search.Size = new Size(236, 23);
+            textBox_search.Size = new Size(236, 31);
             textBox_search.TabIndex = 2;
             textBox_search.TextChanged += textBox_search_TextChanged;
             textBox_search.Enter += textBox_search_Enter;
@@ -72,7 +72,7 @@
             textBox_opt.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
             textBox_opt.Location = new Point(4, 331);
             textBox_opt.Name = "textBox_opt";
-            textBox_opt.Size = new Size(236, 23);
+            textBox_opt.Size = new Size(236, 31);
             textBox_opt.TabIndex = 0;
             // 
             // label_loading
@@ -126,35 +126,36 @@
             // 
             // contextMenuStrip_tray
             // 
+            contextMenuStrip_tray.ImageScalingSize = new Size(24, 24);
             contextMenuStrip_tray.Items.AddRange(new ToolStripItem[] { toolStripMenuItem_show, toolStripMenuItem_settings, toolStripMenuItem_exit });
             contextMenuStrip_tray.Name = "contextMenuStrip_tray";
-            contextMenuStrip_tray.Size = new Size(181, 92);
+            contextMenuStrip_tray.Size = new Size(149, 100);
             // 
             // toolStripMenuItem_show
             // 
             toolStripMenuItem_show.Name = "toolStripMenuItem_show";
-            toolStripMenuItem_show.Size = new Size(180, 22);
+            toolStripMenuItem_show.Size = new Size(148, 32);
             toolStripMenuItem_show.Text = "Show";
             toolStripMenuItem_show.Click += toolStripMenuItem_show_Click;
             // 
             // toolStripMenuItem_settings
             // 
             toolStripMenuItem_settings.Name = "toolStripMenuItem_settings";
-            toolStripMenuItem_settings.Size = new Size(180, 22);
+            toolStripMenuItem_settings.Size = new Size(148, 32);
             toolStripMenuItem_settings.Text = "Settings";
             toolStripMenuItem_settings.Click += toolStripMenuItem_settings_Click;
             // 
             // toolStripMenuItem_exit
             // 
             toolStripMenuItem_exit.Name = "toolStripMenuItem_exit";
-            toolStripMenuItem_exit.Size = new Size(180, 22);
+            toolStripMenuItem_exit.Size = new Size(148, 32);
             toolStripMenuItem_exit.Text = "Exit";
             toolStripMenuItem_exit.Click += toolStripMenuItem_exit_Click;
             // 
             // Form1
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleDimensions = new SizeF(144F, 144F);
+            AutoScaleMode = AutoScaleMode.Dpi;
             ClientSize = new Size(243, 359);
             Controls.Add(label2);
             Controls.Add(label1);
