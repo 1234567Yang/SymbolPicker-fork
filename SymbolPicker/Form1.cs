@@ -15,23 +15,27 @@ namespace SymbolPicker
         private static List<Symbol> recentSymbols = new List<Symbol>();
         private static List<Button> recentSymbolButtons = new List<Button>();
 
+        private static List<Symbol> favSymbols = new List<Symbol>();
+        private static List<Button> favSymbolButtons = new List<Button>();
+
 
         private static string allPath = Application.StartupPath + @"\symbols.txt";
         private static string recentPath = Application.StartupPath + @"\recent.txt";
+        private static string favPath = Application.StartupPath + @"\fav.txt";
 
-        // 基准值（96 DPI下的设计值）
-        private static readonly Size BaseButtonSize = new Size(30, 30);
-        private static readonly float BaseFontSize = 9.5F;
+        private static readonly Size BaseButtonSize = new Size(40, 40);
         private static readonly int BaseButtonPadding = 1;
-
-        // 实际使用的值
-        private static Font templateFont = null;
-        private static Size templateSize;
-        private static Padding templatePadding;
 
 
         private static Keys showHideHotKey;
-        private const int SHOWHIDEHOTKEYCODE = 1;
+        private const int API_HOTKEY_SHOWHIDEHOTKEYCODE = 1;
+
+
+        private const int RECENT_SYMBOL_KEEPCOUNT = 15;
+
+
+        private bool isOperatingFav = false;
+        private bool favOperation = true; // true -> user wants to add; false -> user wants to remove
 
         #region test
         private void TestInit()
@@ -61,39 +65,6 @@ namespace SymbolPicker
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
-            this.AutoScaleMode = AutoScaleMode.Dpi;
-
-            using (Graphics g = this.CreateGraphics())
-            {
-                // 获取当前DPI和缩放比例
-                float currentDpi = g.DpiX;
-                float scaleFactor = currentDpi / 96F;
-
-                // 计算缩放后的尺寸
-                templateSize = new Size(
-                    (int)(BaseButtonSize.Width * scaleFactor),
-                    (int)(BaseButtonSize.Height * scaleFactor)
-                );
-
-                // 计算缩放后的字体大小
-                float scaledFontSize = BaseFontSize * scaleFactor;
-                templateFont = new Font("Segoe UI Variable Display",
-                                       scaledFontSize,
-                                       FontStyle.Regular,
-                                       GraphicsUnit.Point);
-
-                int scaledPadding = (int)(BaseButtonPadding * scaleFactor);
-                Console.WriteLine(scaledPadding);
-                templatePadding = new Padding(
-                    0,                  // 左边距
-                    scaledPadding,      // 上边距
-                    0,                  // 右边距
-                    0                   // 下边距
-                );
-            }
-
-
             TestInit();
 
 
@@ -107,6 +78,7 @@ namespace SymbolPicker
 
             LoadAllButtons();
             LoadRecentButtons();
+            LoadFavButtons();
 
             // AlwaysTopMost(); conflict with setting window, abandoned
 
@@ -116,7 +88,7 @@ namespace SymbolPicker
                 if (char.IsLetterOrDigit(Program.SettingPage.textBox_hotkey.Text[0]))
                 {
                     showHideHotKey = (Keys)Enum.Parse(typeof(Keys), Program.SettingPage.textBox_hotkey.Text.ToUpper());
-                    if (!HotKey.API_RegisterHotKey(this.Handle, SHOWHIDEHOTKEYCODE, HotKey.control.Ctrl, showHideHotKey))
+                    if (!HotKey.API_RegisterHotKey(this.Handle, API_HOTKEY_SHOWHIDEHOTKEYCODE, HotKey.control.Ctrl, showHideHotKey))
                     {
                         MessageBox.Show("Can not reg hot key!");
                     }
@@ -137,16 +109,23 @@ namespace SymbolPicker
             //MessageBox.Show((Program.SettingPage.trackBar_intrans.Value).ToString());
 
             FadeWindow(false);
+
+            this.label_hint.Focus(); // for SetNoActivate, because the default focus is the search box, and if it's focused to the search box and now it's not activated, it will cause some user experience problem
+            SetNoActivate(this.Handle);
         }
 
         private Button CreateOneButton(string tag, string txt)
         {
             Button button = new Button();
-            button.Font = templateFont;
-            button.Size = templateSize;
+            button.Size = BaseButtonSize;
             button.Click += Button_Click;
             button.Tag = tag;
-            button.Padding = templatePadding;
+            button.Padding = new Padding(
+                    0,                  // 左边距
+                    BaseButtonPadding,      // 上边距
+                    0,                  // 右边距
+                    0                   // 下边距
+                ); ;
 
             button.Text = txt;
 
@@ -160,7 +139,7 @@ namespace SymbolPicker
                 string[] linesFromTextFile = File.ReadAllLines(path);
                 for (int i = 0; i < linesFromTextFile.Length; i += 2)
                 {
-                    string name = linesFromTextFile[i];
+                    string name = linesFromTextFile[i] + linesFromTextFile[i + 1]; // also the symbol itself
                     string img = linesFromTextFile[i + 1]; //gets the second line in the section
 
                     Symbol symbol = new Symbol(name, img);
@@ -199,6 +178,10 @@ namespace SymbolPicker
         {
             LoadButtons(recentPath, recentSymbols, recentSymbolButtons, flowLayoutPanel_recent, "recent");
         }
+        private void LoadFavButtons()
+        {
+            LoadButtons(favPath, favSymbols, favSymbolButtons, flowLayoutPanel_fav, "fav");
+        }
 
 
         private void AlwaysTopMost()
@@ -234,36 +217,103 @@ namespace SymbolPicker
         }
         public void EndProgram()
         {
-            SaveRecent();
+            SaveSymbol(recentSymbols, recentPath);
+            SaveSymbol(favSymbols, favPath);
             Program.mutex.ReleaseMutex();
-            HotKey.API_UnregisterHotKey(this.Handle, SHOWHIDEHOTKEYCODE);
+            HotKey.API_UnregisterHotKey(this.Handle, API_HOTKEY_SHOWHIDEHOTKEYCODE);
             Environment.Exit(0); //because the thread in AlwaysTopMost
         }
-        public static void SaveRecent()
+        public static void SaveSymbol(List<Symbol> ls, string filepath)
         {
             string txt = "";
-            foreach (Symbol symbol in recentSymbols)
+            foreach (Symbol symbol in ls)
             {
                 txt += symbol.name + "\n" + symbol.img + "\n";
             }
             try
             {
-                File.WriteAllText(recentPath, txt);
+                File.WriteAllText(filepath, txt);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Can not save recent symbols: " + ex.Message, "Error: ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Can not save {filepath} symbols: " + ex.Message, "Error: ", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
 
 
         #endregion
 
         #region handleOutput
-        private const int RECENTKEEPCOUNT = 24;
-
         private void Button_Click(object? sender, EventArgs e)
         {
+            if (isOperatingFav) { // user is operating the fav box
+                Symbol operatingFavSymbol = allSymbols.FirstOrDefault(x => x.img == ((Button)sender).Text);
+                if (operatingFavSymbol == null) // if cant find the symbol
+                {
+                    MessageBox.Show("Unknown error: Can't find the symbol in allSymbols.");
+                    return;
+                }
+
+                bool isContainedInFavSymbolsNow = favSymbols.FirstOrDefault(x => x.img == operatingFavSymbol.img) == null;
+
+                if (favOperation) // user wants to add
+                {
+                    if (!isContainedInFavSymbolsNow)
+                    {
+                        label_hint.Text = "It's already added!";
+                        return;
+                    }
+
+                    // Add
+
+                    favSymbols.Add(operatingFavSymbol);
+                    Button btn = CreateOneButton("fav", operatingFavSymbol.img);
+                    favSymbolButtons.Add(btn);
+
+
+
+                    label_hint.Text = "Added to the favorite list";
+                }
+                else // users wants to remove
+                {
+                    if (isContainedInFavSymbolsNow)
+                    {
+                        label_hint.Text = "It's not in the favorite list!";
+                        return;
+                    }
+
+                    // Remove
+
+                    favSymbols.Remove(operatingFavSymbol);
+                    Button btnToRemove = favSymbolButtons.FirstOrDefault(x => x.Text == operatingFavSymbol.img);
+                    if(btnToRemove == null)
+                    {
+                        MessageBox.Show("Unknown error: Can't find btnToRemove.");
+                    }
+                    favSymbolButtons.Remove(btnToRemove);
+
+
+                    label_hint.Text = "Removed from the favorite list";
+                }
+
+
+
+
+                // flash the flowLayout
+                AddButtonsToLayout(favSymbolButtons, flowLayoutPanel_fav);
+
+                // save fav buttons to file
+                SaveSymbol(favSymbols, favPath);
+
+
+
+                isOperatingFav = false;
+
+                return;
+            }
+
+
             SetNoActivate(this.Handle);
             ShownAndInputToTextbox((Button)sender);
             textBox_search.Text = "";
@@ -287,7 +337,7 @@ namespace SymbolPicker
                 MessageBox.Show("Can not add symbol to recent!");
             }
 
-            if (recentSymbols.Count > RECENTKEEPCOUNT)
+            if (recentSymbols.Count > RECENT_SYMBOL_KEEPCOUNT)
             {
                 recentSymbols.RemoveAt(recentSymbols.Count - 1);
             }
@@ -306,7 +356,7 @@ namespace SymbolPicker
                 recentSymbolButtons.Insert(0, btn);
             }
 
-            if (recentSymbolButtons.Count > RECENTKEEPCOUNT)
+            if (recentSymbolButtons.Count > RECENT_SYMBOL_KEEPCOUNT)
             {
                 recentSymbolButtons.RemoveAt(recentSymbolButtons.Count - 1);
                 //MessageBox.Show(recentSymbolButtons.Count + "");
@@ -316,7 +366,7 @@ namespace SymbolPicker
 
             #endregion
 
-            SaveRecent();
+            SaveSymbol(recentSymbols,recentPath);
 
             #endregion
 
@@ -355,6 +405,35 @@ namespace SymbolPicker
 
         #endregion
 
+        #region fav_icon
+
+        private void label_fav_add_Click(object sender, EventArgs e)
+        {
+            if(isOperatingFav)
+            {
+                this.label_hint.Text = "Cancled";
+                isOperatingFav = false;
+                return;
+            }
+            this.label_hint.Text = "Click any sign to add, click +/- again to cancle";
+            isOperatingFav = true;
+            favOperation = true; // user wants to add
+        }
+
+        private void label_fav_minus_Click(object sender, EventArgs e)
+        {
+            if (isOperatingFav)
+            {
+                this.label_hint.Text = "Cancled";
+                isOperatingFav = false;
+                return;
+            }
+            this.label_hint.Text = "Click any sign to remove, click +/- again to cancle";
+            isOperatingFav = true;
+            favOperation = false; // user wants to remove
+        }
+
+        #endregion
 
         #region handle input
 
@@ -543,7 +622,7 @@ namespace SymbolPicker
                 case 0x0312: //hotkey
                     switch ((int)m.WParam)
                     {
-                        case SHOWHIDEHOTKEYCODE:
+                        case API_HOTKEY_SHOWHIDEHOTKEYCODE:
 
                             label1.Focus(); //×ÜÊÇlabel1¾ÍºÃÁË
                             if (this.Visible == false) //WindowState == FormWindowState.Minimized
