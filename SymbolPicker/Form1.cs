@@ -253,6 +253,7 @@ namespace SymbolPicker
                 if (operatingFavSymbol == null) // if cant find the symbol
                 {
                     MessageBox.Show("Unknown error: Can't find the symbol in allSymbols.");
+                    isOperatingFav = false;
                     return;
                 }
 
@@ -263,6 +264,7 @@ namespace SymbolPicker
                     if (isContainedInFavSymbolsNow)
                     {
                         label_hint.Text = "It's already added!";
+                        isOperatingFav = false;
                         return;
                     }
 
@@ -281,6 +283,7 @@ namespace SymbolPicker
                     if (!isContainedInFavSymbolsNow)
                     {
                         label_hint.Text = "It's not in the favorite list!";
+                        isOperatingFav = false;
                         return;
                     }
 
