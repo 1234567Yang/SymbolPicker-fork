@@ -228,6 +228,7 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Symbol Picker";
             TopMost = true;
+            Deactivate += Form1_Deactivate;
             FormClosing += Form1_FormClosing;
             Load += Form1_Load;
             KeyDown += Form1_KeyDown;

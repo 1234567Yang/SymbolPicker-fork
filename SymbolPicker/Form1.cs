@@ -247,7 +247,8 @@ namespace SymbolPicker
         #region handleOutput
         private void Button_Click(object? sender, EventArgs e)
         {
-            if (isOperatingFav) { // user is operating the fav box
+            if (isOperatingFav)
+            { // user is operating the fav box
                 Symbol operatingFavSymbol = allSymbols.FirstOrDefault(x => x.img == ((Button)sender).Text);
                 if (operatingFavSymbol == null) // if cant find the symbol
                 {
@@ -289,7 +290,7 @@ namespace SymbolPicker
                     favSymbols.Remove(removeFavS);
 
                     Button btnToRemove = favSymbolButtons.FirstOrDefault(x => x.Text == operatingFavSymbol.img);
-                    if(btnToRemove == null)
+                    if (btnToRemove == null)
                     {
                         MessageBox.Show("Unknown error: Can't find btnToRemove.");
                     }
@@ -368,7 +369,7 @@ namespace SymbolPicker
 
             #endregion
 
-            SaveSymbol(recentSymbols,recentPath);
+            SaveSymbol(recentSymbols, recentPath);
 
             #endregion
 
@@ -411,7 +412,7 @@ namespace SymbolPicker
 
         private void label_fav_add_Click(object sender, EventArgs e)
         {
-            if(isOperatingFav)
+            if (isOperatingFav)
             {
                 this.label_hint.Text = "Cancled";
                 isOperatingFav = false;
@@ -569,8 +570,6 @@ namespace SymbolPicker
             }
         }
 
-
-
         private void textBox_search_Enter(object sender, EventArgs e)
         {
             Trace.WriteLine(1);
@@ -584,6 +583,11 @@ namespace SymbolPicker
             SetNoActivate(this.Handle);
             this.Hide();
             this.Show(); //cancle activate
+        }
+
+        private void Form1_Deactivate(object sender, EventArgs e)
+        {
+            label_hint.Focus(); // if the user is inputting at the textbox, then we can let it lose focus
         }
         #endregion
 
