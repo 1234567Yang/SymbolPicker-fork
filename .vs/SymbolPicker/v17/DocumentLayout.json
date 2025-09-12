@@ -3,12 +3,12 @@
   "WorkspaceRootPath": "C:\\C#sourceCode\\SymbolPicker-fork\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{54460062-6FC5-4FD8-A069-F2B3FE18F7B7}|SymbolPicker\\SymbolPicker.csproj|c:\\c#sourcecode\\symbolpicker-fork\\symbolpicker\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{54460062-6FC5-4FD8-A069-F2B3FE18F7B7}|SymbolPicker\\SymbolPicker.csproj|solutionrelative:symbolpicker\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{54460062-6FC5-4FD8-A069-F2B3FE18F7B7}|SymbolPicker\\SymbolPicker.csproj|c:\\c#sourcecode\\symbolpicker-fork\\symbolpicker\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{54460062-6FC5-4FD8-A069-F2B3FE18F7B7}|SymbolPicker\\SymbolPicker.csproj|solutionrelative:symbolpicker\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{54460062-6FC5-4FD8-A069-F2B3FE18F7B7}|SymbolPicker\\SymbolPicker.csproj|c:\\c#sourcecode\\symbolpicker-fork\\symbolpicker\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{54460062-6FC5-4FD8-A069-F2B3FE18F7B7}|SymbolPicker\\SymbolPicker.csproj|solutionrelative:symbolpicker\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
       "AbsoluteMoniker": "D:0:0:{54460062-6FC5-4FD8-A069-F2B3FE18F7B7}|SymbolPicker\\SymbolPicker.csproj|c:\\c#sourcecode\\symbolpicker-fork\\symbolpicker\\symbols.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
@@ -30,7 +30,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
@@ -42,25 +42,24 @@
               "RelativeToolTip": "SymbolPicker\\symbols.txt",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
-              "WhenOpened": "2025-09-12T00:16:14.412Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-12T00:16:14.412Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "Form1.cs",
               "DocumentMoniker": "C:\\C#sourceCode\\SymbolPicker-fork\\SymbolPicker\\Form1.cs",
               "RelativeDocumentMoniker": "SymbolPicker\\Form1.cs",
               "ToolTip": "C:\\C#sourceCode\\SymbolPicker-fork\\SymbolPicker\\Form1.cs",
               "RelativeToolTip": "SymbolPicker\\Form1.cs",
-              "ViewState": "AgIAACMBAAAAAAAAAAAewA0BAAAjAAAAAAAAAA==",
+              "ViewState": "AgIAAAwBAAAAAAAAAAAowB8BAAB0AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-09-11T21:33:55.032Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Form1.cs [Design]",
               "DocumentMoniker": "C:\\C#sourceCode\\SymbolPicker-fork\\SymbolPicker\\Form1.cs",
               "RelativeDocumentMoniker": "SymbolPicker\\Form1.cs",
@@ -80,8 +79,7 @@
               "RelativeToolTip": "SymbolPicker\\Program.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAADoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-30T01:27:44.018Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-08-30T01:27:44.018Z"
             },
             {
               "$type": "Document",

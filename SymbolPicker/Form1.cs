@@ -255,11 +255,11 @@ namespace SymbolPicker
                     return;
                 }
 
-                bool isContainedInFavSymbolsNow = favSymbols.FirstOrDefault(x => x.img == operatingFavSymbol.img) == null;
+                bool isContainedInFavSymbolsNow = favSymbols.FirstOrDefault(x => x.img == operatingFavSymbol.img) != null;
 
                 if (favOperation) // user wants to add
                 {
-                    if (!isContainedInFavSymbolsNow)
+                    if (isContainedInFavSymbolsNow)
                     {
                         label_hint.Text = "It's already added!";
                         return;
@@ -277,7 +277,7 @@ namespace SymbolPicker
                 }
                 else // users wants to remove
                 {
-                    if (isContainedInFavSymbolsNow)
+                    if (!isContainedInFavSymbolsNow)
                     {
                         label_hint.Text = "It's not in the favorite list!";
                         return;
@@ -285,7 +285,9 @@ namespace SymbolPicker
 
                     // Remove
 
-                    favSymbols.Remove(operatingFavSymbol);
+                    Symbol removeFavS = favSymbols.FirstOrDefault(x => x.img == operatingFavSymbol.img); // they are different objects
+                    favSymbols.Remove(removeFavS);
+
                     Button btnToRemove = favSymbolButtons.FirstOrDefault(x => x.Text == operatingFavSymbol.img);
                     if(btnToRemove == null)
                     {

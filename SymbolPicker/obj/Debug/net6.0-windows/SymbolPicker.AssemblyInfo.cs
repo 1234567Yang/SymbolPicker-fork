@@ -16,7 +16,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCopyrightAttribute("Copyright © 2025 Yang and Thisismalindu published under MIT license")]
 [assembly: System.Reflection.AssemblyDescriptionAttribute("Pick different symbols and insert them wherever you are typing")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.2.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.2.0+8ffbabb29d3afaa673d412180364cc0f04747e53")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.2.0+fe9d794da999e1b83d7f51c7659a091d833572dd")]
 [assembly: System.Reflection.AssemblyProductAttribute("Symbol Picker")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SymbolPicker")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.2.0.0")]
