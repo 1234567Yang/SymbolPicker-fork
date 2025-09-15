@@ -11,15 +11,15 @@
 using System;
 using System.Reflection;
 
-[assembly: System.Reflection.AssemblyCompanyAttribute("Yang")]
+[assembly: System.Reflection.AssemblyCompanyAttribute("Yang and Thisismalindu")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyCopyrightAttribute("Copyright © 2025 Yang and Thisismalindu published under MIT license")]
 [assembly: System.Reflection.AssemblyDescriptionAttribute("Pick different symbols and insert them wherever you are typing")]
-[assembly: System.Reflection.AssemblyFileVersionAttribute("1.2.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.2.0+33da90d172629618ec35f226b8b05580a97d9980")]
+[assembly: System.Reflection.AssemblyFileVersionAttribute("1.3.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.3.0+cc3958c224e64c740234b9a193fcc7ea6cc46fc4")]
 [assembly: System.Reflection.AssemblyProductAttribute("Symbol Picker")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SymbolPicker")]
-[assembly: System.Reflection.AssemblyVersionAttribute("1.2.0.0")]
+[assembly: System.Reflection.AssemblyVersionAttribute("1.3.0.0")]
 [assembly: System.Runtime.Versioning.TargetPlatformAttribute("Windows7.0")]
 [assembly: System.Runtime.Versioning.SupportedOSPlatformAttribute("Windows7.0")]
 

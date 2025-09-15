@@ -29,10 +29,21 @@ namespace SymbolPicker
             }
 
 
+
+
+            //if (Environment.OSVersion.Version.Major >= 6)
+            //    SetProcessDPIAware();
+
+
             ApplicationConfiguration.Initialize();
             MainForm = new Form1();
             Application.Run(MainForm);
         }
+
+        //#region dpi stuff
+        //[DllImport("user32.dll")]
+        //private static extern bool SetProcessDPIAware();
+        //#endregion
 
         #region mutex send message
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
