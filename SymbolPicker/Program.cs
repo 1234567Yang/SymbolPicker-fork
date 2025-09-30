@@ -1,8 +1,21 @@
 using System;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace SymbolPicker
 {
+    class DebugTextWriter : TextWriter
+    {
+        public override Encoding Encoding => Encoding.UTF8;
+
+        public override void Write(char value) => Debug.Write(value);
+        public override void Write(string value) => Debug.Write(value);
+        public override void WriteLine(string value) => Debug.WriteLine(value);
+    }
+
+
+
     internal static class Program
     {
         public static Settings SettingPage;
@@ -20,6 +33,9 @@ namespace SymbolPicker
         {
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
+            Console.SetOut(new DebugTextWriter());
+
+            Console.WriteLine("Start");
 
             Thread.Sleep(100); //maybe restart
             if (!mutex.WaitOne(500, false)) //500ms£¬maybe settings restart
