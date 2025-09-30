@@ -23,6 +23,7 @@ A simple symbol picker app, similar to the Windows Emoji Picker, that allows you
 * **Transparency bar**: New option to customize transparency
 * **Customizable**: Settings allow you to customize the application
 * **Add your own custom symbols**: You can add your own symbols by editing the `symbols.txt` file with Unicode characters
+* **Favorite symbols**: You can now pin your favorite symbols
 
 
 
@@ -70,6 +71,14 @@ Here’s a breakdown of the project's folder structure:
 
 -->
 * **Form1**: The main function window
+  * init: Initialize the program, load buttons and symbols, register hotkey
+  * end: When exit the program, save favorite and recent symbols, unregister hotkey
+  * handleOutput: When symbol buttons are clicked, simulate typing. Also detect if the user is trying to add / delete favorite icons
+  * fav_icon: Add / remove favorite icons
+  * handle input: Handle the user search input
+  * window setting: No focus (for simulating typing the symbol) / other settings
+  * hot key: Handle hotkey events
+  * tray: The program's tray icon
 * **Settings**: The settings window
 * **icons8_alpha.ico**: The app's icon.
 * **symbols.txt**: A text file where you can add custom symbols (in Unicode).
