@@ -732,6 +732,22 @@ namespace SymbolPicker
         }
         #endregion
 
+        private void toolStripMenuItem_about_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var psi = new System.Diagnostics.ProcessStartInfo
+                {
+                    FileName = "https://github.com/1234567Yang/SymbolPicker-fork",
+                    UseShellExecute = true
+                };
+                System.Diagnostics.Process.Start(psi);
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("https://github.com/1234567Yang/SymbolPicker-fork");
+            }
+        }
     }
 
     public class Symbol

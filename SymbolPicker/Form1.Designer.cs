@@ -46,6 +46,7 @@
             label_fav_add = new Label();
             label_fav_minus = new Label();
             label_hint = new Label();
+            toolStripMenuItem_about = new ToolStripMenuItem();
             contextMenuStrip_tray.SuspendLayout();
             SuspendLayout();
             // 
@@ -120,28 +121,28 @@
             // contextMenuStrip_tray
             // 
             contextMenuStrip_tray.ImageScalingSize = new Size(24, 24);
-            contextMenuStrip_tray.Items.AddRange(new ToolStripItem[] { toolStripMenuItem_show, toolStripMenuItem_settings, toolStripMenuItem_exit });
+            contextMenuStrip_tray.Items.AddRange(new ToolStripItem[] { toolStripMenuItem_about, toolStripMenuItem_show, toolStripMenuItem_settings, toolStripMenuItem_exit });
             contextMenuStrip_tray.Name = "contextMenuStrip_tray";
-            contextMenuStrip_tray.Size = new Size(149, 100);
+            contextMenuStrip_tray.Size = new Size(241, 165);
             // 
             // toolStripMenuItem_show
             // 
             toolStripMenuItem_show.Name = "toolStripMenuItem_show";
-            toolStripMenuItem_show.Size = new Size(148, 32);
+            toolStripMenuItem_show.Size = new Size(240, 32);
             toolStripMenuItem_show.Text = "Show";
             toolStripMenuItem_show.Click += toolStripMenuItem_show_Click;
             // 
             // toolStripMenuItem_settings
             // 
             toolStripMenuItem_settings.Name = "toolStripMenuItem_settings";
-            toolStripMenuItem_settings.Size = new Size(148, 32);
+            toolStripMenuItem_settings.Size = new Size(240, 32);
             toolStripMenuItem_settings.Text = "Settings";
             toolStripMenuItem_settings.Click += toolStripMenuItem_settings_Click;
             // 
             // toolStripMenuItem_exit
             // 
             toolStripMenuItem_exit.Name = "toolStripMenuItem_exit";
-            toolStripMenuItem_exit.Size = new Size(148, 32);
+            toolStripMenuItem_exit.Size = new Size(240, 32);
             toolStripMenuItem_exit.Text = "Exit";
             toolStripMenuItem_exit.Click += toolStripMenuItem_exit_Click;
             // 
@@ -203,6 +204,13 @@
             label_hint.Text = "Hint";
             label_hint.TextAlign = ContentAlignment.MiddleCenter;
             // 
+            // toolStripMenuItem_about
+            // 
+            toolStripMenuItem_about.Name = "toolStripMenuItem_about";
+            toolStripMenuItem_about.Size = new Size(240, 32);
+            toolStripMenuItem_about.Text = "About";
+            toolStripMenuItem_about.Click += toolStripMenuItem_about_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(144F, 144F);
@@ -254,5 +262,6 @@
         private Label label_fav_add;
         private Label label_fav_minus;
         private Label label_hint;
+        private ToolStripMenuItem toolStripMenuItem_about;
     }
 }
